@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div class="list">
+		<ul>
+			<li class="ng-scope" ng-repeat="value in movie.subjects">
+      <a href="#/details">
+      <!-- ng-src就相当于ng-bind 后面要带大括号-->
+        <img alt="" ng-src="{{value.images.large}}" >
+      </a>
+      <div class="meta">
+        <h4><span class="ng-binding">{{value.title}}</span> <em class="ng-binding" ng-bind="value.rating.average"></em></h4>
+        <div class="otherinfo">类型:<!-- ngRepeat: gen in item.genres --><span class="ng-binding ng-scope" ng-repeat="juqing in value.genres" ng-bind="juqing"></span><!-- end ngRepeat: gen in item.genres --></div>
+      </div>
+    </li>
+		</ul>
+	</div>
+</body>
+</html>
