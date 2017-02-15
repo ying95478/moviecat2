@@ -1,11 +1,15 @@
-//创建一个控制器
-angular.module("movieApp.laterCtrl",[])
-.controller("laterCtrl",["$scope","$movieServ","$routeParams",
-	function($scope,$movieServ,$routeParams){
-	$scope.isLoading = false;
-	//实现电影列表展示功能
-	//$routeParams.pageid就是用来展示当前的页码数的
-	//scope.pageid = $routeParams.pageid;
+angular.module("movieApp.searchCtrl",[])
+.controller("searchCtrl",["$scope","$routeParams","$movieServ",function($scope,$routeParams,$movieServ){
+	/*$scope.movie = "";
+	$movieServ.jsonp("https://api.douban.com/v2/movie/search",
+	{
+		q:$routeParams.searchName
+	},function(data){
+		console.log(data);
+		$scope.movie = data;
+		$scope.$apply();
+	})
+*/  $scope.searchName = $routeParams.searchName;
 	$scope.movie = {};
 
 	//通过ajax请求data.json中的数据,将它赋值给$scope.movie
@@ -22,17 +26,18 @@ angular.module("movieApp.laterCtrl",[])
     }, function(data) {
         console.log(data);
     })*/
-    $routeParams.pageid = $routeParams.pageid || 1
-    console.log($routeParams.pageid);
+    $scope.isLoading = false;
+    $routeParams.pageid = $routeParams.pageid || 1;
+    $scope.pageid = $routeParams.pageid;
     var start = ($routeParams.pageid-1)*5
-    console.log(start)
-	$movieServ.jsonp('https://api.douban.com/v2/movie/coming_soon', {
+	$movieServ.jsonp('https://api.douban.com/v2/movie/search', {
+		q: $routeParams.searchName,
         count: 5,
         start: start
     }, function(data) {
         console.log(data);
     	$scope.prePage = $routeParams.pageid-1;
-    	$scope.nextPage = ($routeParams.pageid-0)+1;
+    	$scope.newxPage = ($routeParams.pageid-0)+1;
     	if($routeParams.pageid ==1){
     		$scope.prePage = $routeParams.pageid;
     	}
@@ -45,12 +50,8 @@ angular.module("movieApp.laterCtrl",[])
     	$scope.pageTotal = data.total;
     	$scope.isLoading = true;
     	//暴露一个当前条数
-    	$scope.pageid = $routeParams.pageid;
         $scope.movie = data;
+        console.log(data);
         $scope.$apply();
     });
-
-    /**
-     * 实现分页功能:
-     */
 }])
